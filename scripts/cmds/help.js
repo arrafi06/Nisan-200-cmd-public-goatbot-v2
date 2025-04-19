@@ -4,7 +4,7 @@ const axios = require("axios");
 const path = require("path");
 const { getPrefix } = global.utils;
 const { commands, aliases } = global.GoatBot;
-const doNotDelete = "[ N I S A N ]"; // changing this wont change the goatbot V2 of list cmd it is just a decoyy
+const doNotDelete = "[ N I S A N ]";
 
 module.exports = {
   config: {
@@ -36,8 +36,6 @@ module.exports = {
       const categories = {};
       let msg = "";
 
-      msg += ``; // replace with your name 
-
       for (const [name, value] of commands) {
         if (value.config.role > 1 && role < value.config.role) continue;
 
@@ -62,10 +60,14 @@ module.exports = {
 
       const totalCommands = commands.size;
       msg += `\n\n╭─────❃[✨𝙴𝙽𝙹𝙾𝚈✨] |[✨𝚈𝙾𝚄𝚁 𝙽𝙸𝚂𝙰𝙽✨]\n | [ 🍀𝙹𝙾𝙸𝙽 𝙾𝚄𝚁 𝙶𝚁𝙾𝚄𝙿 𝚃𝚈𝙿𝙴: ${prefix}𝚂𝚄𝙿𝙿𝙾𝚁𝚃𝙶𝙲 ]\n | [✨𝙳𝙰𝚈𝚁𝙴𝙲𝚃 𝙶𝚁𝙾𝚄𝙿 𝙻𝙸𝙽𝙺: https://m.me/j/AbY3p0X1B6V7YhzB/ ]\n│>𝚃𝙾𝚃𝙰𝙻 𝙲𝙼𝙳𝚂: [✨${totalCommands}✨].\n│𝚃𝚈𝙿𝙴:[ 🍀${prefix}𝙷𝙴𝙻𝙿 𝚃𝙾✨\n│✨<𝙲𝙼𝙳> 𝚃𝙾 𝙻𝙴𝙰𝚁𝙽 𝚃𝙷𝙴 𝚄𝚂𝙰𝙶𝙴.]\n╰────────────✦`;
-      msg += ``;
-      msg += `\n╭─────❃\n│ 🌟 | [✨𝙶𝙾𝙰𝚃𝙱𝙾𝚃🐐│𝙾𝚆𝙽𝙴𝚁 𝙵𝙱 𝙸𝙳:  //www.facebook.com/profile.php?id=/61567840496026\n╰────────────✦`;            
-        await message.reply({
+      msg += `\n╭─────❃\n│ 🌟 | [✨𝙶𝙾𝙰𝚃𝙱𝙾𝚃🐐│𝙾𝚆𝙽𝙴𝚁 𝙵𝙱 𝙸𝙳: //www.facebook.com/profile.php?id=61567840496026\n╰────────────✦`;
+
+      const mediaUrl = "https://media.tenor.com/2E-w2aDC9z0AAAAd/goat-cute.gif";
+      const attachment = await getMediaAttachment(mediaUrl);
+
+      await message.reply({
         body: msg,
+        attachment: attachment ? [attachment] : undefined
       });
     } else {
       const commandName = args[0].toLowerCase();
@@ -76,11 +78,9 @@ module.exports = {
       } else {
         const configCommand = command.config;
         const roleText = roleTextToString(configCommand.role);
-        const otherName=(configCommand.aliases);
+        const otherName = configCommand.aliases;
         const author = configCommand.author || "Unknown";
-
-        const longDescription = (configCommand.longDescription) ? (configCommand.longDescription.en) || "No description" : "No description";
-
+        const longDescription = (configCommand.longDescription?.en) || "No description";
         const guideBody = configCommand.guide?.en || "No guide available.";
         const usage = guideBody.replace(/{p}/g, prefix).replace(/{n}/g, configCommand.name);
 
@@ -109,15 +109,23 @@ module.exports = {
 
 function roleTextToString(roleText) {
   switch (roleText) {
-    case 0:
-      return ("0 (All users)");
-    case 1:
-      return ("1 (Group administrators)");
-    case 2:
-      return ("2 (Admin bot)");
-    default:
-      return ("Unknown role");
+    case 0: return "0 (All users)";
+    case 1: return "1 (Group administrators)";
+    case 2: return "2 (Admin bot)";
+    default: return "Unknown role";
   }
-  const wrapper = new GoatWrapper(module.exports);
+}
+
+// Helper function for media
+async function getMediaAttachment(url) {
+  try {
+    const response = await axios.get(url, { responseType: "stream" });
+    return response.data;
+  } catch (error) {
+    console.error("Error loading media:", error);
+    return null;
+  }
+}
+
+const wrapper = new GoatWrapper(module.exports);
 wrapper.applyNoPrefix({ allowPrefix: true });
-                                                                        }
