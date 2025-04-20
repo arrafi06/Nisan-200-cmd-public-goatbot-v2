@@ -23,8 +23,8 @@
     "SAMIR": "https://apis-samir.onrender.com",
     "RUBISH": "https://rubish-apihub.onrender.com/rubish"
   },
-  "nickNameBot": "『 - 』•『𝚈 𝙾 𝚄 𝚁』",
-  "prefix": "-",
+  "nickNameBot": "『𝚈 𝙾 𝚄 𝚁』•LOID",
+  "prefix": ".",
   "vipUser": [
     "100090347912843"
   ],
@@ -35,7 +35,7 @@
     "100090347912843"
   ],
 "nisanBot": [
-    "28297135763266706"
+    ""
   ],
 
   "rubishapi": "https://rubish-apihub.onrender.com/rubish",
